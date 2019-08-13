@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+</head>
+<body>
+	<script type="module">
+		import { ninjaBenchmark, showBestResults} from './ninjaBench.js';
+		
+		
+		function fibRecursion(n) {
+//			debugger;
+			if(n<2) {
+				return n;
+			}
+			return fibRecursion(n-1) + fibRecursion(n-2);
+		}
+		
+		
+		function fibFor (n) {
+			var x1 = 0;
+			var x2 = 1;
+			var result = 0;
+			for (var i = 1; i < n; i++) {
+				result = x2 + x1;
+				x1 = x2;
+				x2 = result;
+			}
+			return result;
+		}
+		
+//		console.log( fibRecursion(15) );
+//		console.log( fibFor(15) );
+		
+		var results =  ninjaBenchmark([fibRecursion, fibFor], 1, 40);
+		console.log( showBestResults(results) );
+	</script>
+</body>
+</html>

@@ -19,6 +19,7 @@
 //	return newArr;
 //}
 
+//тут я решил, что в arr.slice(start, end) нельзя передавать end больше чем длина arr. Поэтому нагромоздил лишнего кода.
 //function chunk(array, size) {
 //	var newArr = [];
 //	var idx = 0;
@@ -76,20 +77,36 @@
 //}
 
 //такой же вариант, но с доп переменной lastSubArr, которая немного укорачивает код
+//function chunk(array, size) {
+//	var newArr = [];
+//	
+//	array.forEach((item) => {
+//		const lastSubArr = newArr[newArr.length-1]; //тут будет undefined, если в newArr ничего нет
+//		
+//		if(!lastSubArr || lastSubArr.length === size) {
+//			newArr.push([item])
+//		}
+//		else {
+//			lastSubArr.push(item);
+//		}
+//	})
+//	
+//	return newArr;
+//}
+
+
+//Решение 2 через slice()
+//на каждой итерации создаём подмассив длинной size. И копируем туда нужную часть array. А потом сдвигаем индекс на size.
+//Очень простое решение
 function chunk(array, size) {
 	var newArr = [];
+	let idx = 0;
 	
-	array.forEach((item) => {
-		const lastSubArr = newArr[newArr.length-1]; //тут будет undefined, если в newArr ничего нет
-		
-		if(!lastSubArr || lastSubArr.length === size) {
-			newArr.push([item])
-		}
-		else {
-			lastSubArr.push(item);
-		}
-	})
-	
+	while(idx < array.length) {
+		newArr.push(array.slice(idx, idx+size));
+		idx+=size;
+	}
+
 	return newArr;
 }
 
